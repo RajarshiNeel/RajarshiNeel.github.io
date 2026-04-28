@@ -3,7 +3,7 @@
 Personal academic portfolio site hosted on GitHub Pages.
 
 ## Live Site
-[https://rajarshineel.github.io](https://rajarshineel.github.io/index(1))
+[https://rajarshineel.github.io](https://rajarshineel.github.io/index(1).html)
 
 ## Stack
 Pure HTML/CSS/JS — no frameworks, no build step, deploys instantly.
