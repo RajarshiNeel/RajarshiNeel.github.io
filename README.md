@@ -15,4 +15,4 @@ README.md         ← this file
 ```
 
 ## To update
-Edit `index(1).html` directly and push. Changes go live in ~60 seconds.
+Edit `index.html` directly and push. Changes go live in ~60 seconds.
