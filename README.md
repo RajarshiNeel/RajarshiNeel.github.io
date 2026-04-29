@@ -10,7 +10,7 @@ Pure HTML/CSS/JS — no frameworks, no build step, deploys instantly.
 
 ## Structure
 ```
-index.html        ← your entire portfolio (rename portfolio.html to this)
+remixed-c5c963ab.html       ← your entire portfolio (rename portfolio.html to this)
 README.md         ← this file
 ```
 
