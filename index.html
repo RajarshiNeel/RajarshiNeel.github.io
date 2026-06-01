@@ -873,7 +873,8 @@ img{display:block;max-width:100%;}
   color: var(--soft);
   line-height: 1.7;
 }
-
+<div class="cursor-dot"></div>
+<div class="cursor-circle"></div>
 /* ============================================================
    TOP BAR (mobile)
    ============================================================ */
@@ -947,53 +948,41 @@ img{display:block;max-width:100%;}
    CUSTOM CURSOR
    ==================================== */
 
-body{
-  cursor:none;
+body {
+  cursor: none;
 }
 
-.cursor{
-  position:fixed;
-  width:32px;
-  height:32px;
-  border:1px solid var(--accent2);
-  border-radius:50%;
-  pointer-events:none;
-  transform:translate(-50%,-50%);
-  z-index:9999;
-  transition:
-    width .25s ease,
-    height .25s ease,
-    border-color .25s ease,
-    transform .08s linear;
+.cursor-dot,
+.cursor-circle {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 99999;
+  transform: translate(-50%, -50%);
 }
 
-.cursor-dot{
-  position:fixed;
-  width:6px;
-  height:6px;
-  background:var(--accent);
-  border-radius:50%;
-  pointer-events:none;
-  transform:translate(-50%,-50%);
-  z-index:10000;
+.cursor-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--accent);
+  border-radius: 50%;
 }
 
-.cursor.hover{
-  width:50px;
-  height:50px;
-  border-color:var(--gold);
+.cursor-circle {
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--accent2);
+  border-radius: 50%;
+  transition: width 0.2s ease,
+              height 0.2s ease,
+              border-color 0.2s ease;
 }
 
-/* Disable on touch devices */
-@media (hover:none){
-  .cursor,
-  .cursor-dot{
-    display:none;
-  }
-
-  body{
-    cursor:auto;
-  }
+a:hover ~ .cursor-circle,
+button:hover ~ .cursor-circle {
+  width: 40px;
+  height: 40px;
 }
    
 /* ============================================================
@@ -1570,29 +1559,34 @@ if (heroPhoto) {
     if (placeholder) placeholder.style.display = 'flex';
   });
 }
-   /* ── Custom Cursor ── */
-const cursor = document.querySelector('.cursor');
-const cursorDot = document.querySelector('.cursor-dot');
+/* Dot + Circle Cursor */
+const dot = document.querySelector('.cursor-dot');
+const circle = document.querySelector('.cursor-circle');
+
+let mouseX = 0;
+let mouseY = 0;
+let circleX = 0;
+let circleY = 0;
 
 document.addEventListener('mousemove', (e) => {
-  cursor.style.left = e.clientX + 'px';
-  cursor.style.top = e.clientY + 'px';
+  mouseX = e.clientX;
+  mouseY = e.clientY;
 
-  cursorDot.style.left = e.clientX + 'px';
-  cursorDot.style.top = e.clientY + 'px';
+  dot.style.left = mouseX + 'px';
+  dot.style.top = mouseY + 'px';
 });
 
-document.querySelectorAll(
-  'a, button, .home-latest-card, .proj-item, .tag'
-).forEach(el => {
-  el.addEventListener('mouseenter', () => {
-    cursor.classList.add('hover');
-  });
+function animateCursor() {
+  circleX += (mouseX - circleX) * 0.15;
+  circleY += (mouseY - circleY) * 0.15;
 
-  el.addEventListener('mouseleave', () => {
-    cursor.classList.remove('hover');
-  });
-});
+  circle.style.left = circleX + 'px';
+  circle.style.top = circleY + 'px';
+
+  requestAnimationFrame(animateCursor);
+}
+
+animateCursor();
 
 </script>
 </body>
