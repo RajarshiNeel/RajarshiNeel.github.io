@@ -873,8 +873,6 @@ img{display:block;max-width:100%;}
   color: var(--soft);
   line-height: 1.7;
 }
-<div class="cursor-dot"></div>
-<div class="cursor-circle"></div>
 /* ============================================================
    TOP BAR (mobile)
    ============================================================ */
@@ -944,47 +942,6 @@ img{display:block;max-width:100%;}
 }
 #mobile-menu button:last-child { border-bottom: none; }
 #mobile-menu button:hover { color: var(--text); background: var(--bg3); }
-/* ====================================
-   CUSTOM CURSOR
-   ==================================== */
-
-body {
-  cursor: none;
-}
-
-.cursor-dot,
-.cursor-circle {
-  position: fixed;
-  top: 0;
-  left: 0;
-  pointer-events: none;
-  z-index: 99999;
-  transform: translate(-50%, -50%);
-}
-
-.cursor-dot {
-  width: 6px;
-  height: 6px;
-  background: var(--accent);
-  border-radius: 50%;
-}
-
-.cursor-circle {
-  width: 28px;
-  height: 28px;
-  border: 1px solid var(--accent2);
-  border-radius: 50%;
-  transition: width 0.2s ease,
-              height 0.2s ease,
-              border-color 0.2s ease;
-}
-
-a:hover ~ .cursor-circle,
-button:hover ~ .cursor-circle {
-  width: 40px;
-  height: 40px;
-}
-   
 /* ============================================================
    RESPONSIVE
    ============================================================ */
@@ -1559,34 +1516,36 @@ if (heroPhoto) {
     if (placeholder) placeholder.style.display = 'flex';
   });
 }
-/* Dot + Circle Cursor */
-const dot = document.querySelector('.cursor-dot');
-const circle = document.querySelector('.cursor-circle');
+document.querySelectorAll('a, button').forEach(...)
+   document.addEventListener("click", function(e) {
+  const ripple = document.createElement("span");
 
-let mouseX = 0;
-let mouseY = 0;
-let circleX = 0;
-let circleY = 0;
+  ripple.style.position = "fixed";
+  ripple.style.left = e.clientX + "px";
+  ripple.style.top = e.clientY + "px";
+  ripple.style.width = "10px";
+  ripple.style.height = "10px";
+  ripple.style.border = "2px solid #c4a882";
+  ripple.style.borderRadius = "50%";
+  ripple.style.pointerEvents = "none";
+  ripple.style.transform = "translate(-50%, -50%)";
+  ripple.style.zIndex = "99999";
 
-document.addEventListener('mousemove', (e) => {
-  mouseX = e.clientX;
-  mouseY = e.clientY;
+  document.body.appendChild(ripple);
 
-  dot.style.left = mouseX + 'px';
-  dot.style.top = mouseY + 'px';
+  ripple.animate(
+    [
+      { width: "10px", height: "10px", opacity: 1 },
+      { width: "60px", height: "60px", opacity: 0 }
+    ],
+    {
+      duration: 500,
+      easing: "ease-out"
+    }
+  );
+
+  setTimeout(() => ripple.remove(), 500);
 });
-
-function animateCursor() {
-  circleX += (mouseX - circleX) * 0.15;
-  circleY += (mouseY - circleY) * 0.15;
-
-  circle.style.left = circleX + 'px';
-  circle.style.top = circleY + 'px';
-
-  requestAnimationFrame(animateCursor);
-}
-
-animateCursor();
 
 </script>
 </body>
